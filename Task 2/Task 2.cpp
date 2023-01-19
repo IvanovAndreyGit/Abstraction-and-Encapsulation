@@ -1,6 +1,5 @@
 ﻿// Task 2.cpp : This file contains the 'main' function. Program execution begins and ends there.
-// Task1.cpp
-//
+
 
 #include <iostream>
 #include <fstream>
@@ -112,7 +111,7 @@ int main()
         Addresses* addr_arr = new Addresses[n];
         while (!(file_in.eof()))
         {
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < address.GetNumberAddr(); i++)
             {
                 file_in >> c;
                 addr_arr[i].SetCity(c);
@@ -124,27 +123,7 @@ int main()
                 addr_arr[i].SetRoom(r);
             }
         }
-        std::cout << "---------" << std::endl;
-        std::cout << addr_arr[0].GetCity() << std::endl;
-        std::cout << addr_arr[1].GetCity() << std::endl;
-        std::cout << addr_arr[2].GetCity() << std::endl;
-        std::cout << addr_arr[3].GetCity() << std::endl;
-        std::cout << addr_arr[4].GetCity() << std::endl;
-        std::cout << "+++++++++" << std::endl;
-        std::cout << address.GetNumberAddr() << std::endl;
-        for (int i = 0; i < address.GetNumberAddr(); i++)
-        {
-            std::string result2 = addr_arr[i].GetCity();
-            std::cout << result2 << std::endl;
-        }
-        std::cout << "+++++++++" << std::endl;
-        std::ofstream file_out2("out2.txt");
-        file_out2 << address.GetNumberAddr() << std::endl;
-        //std::string City1 = addr_arr[0].GetCity();
-        //std::string City2 = addr_arr[0 + 1].GetCity();
-        //std::cout << City1[0] << std::endl;
-        //std::cout << City2[0] << std::endl;
-        std::cout << "xxxxxxxxxxxxx" << std::endl;
+ 
         bool swapped{};
         do
         {
@@ -160,11 +139,6 @@ int main()
                 std::string street2 = addr_arr[i + 1].GetStreet();
                 int house2 = addr_arr[i + 1].GetHouse();
                 int room2 = addr_arr[i + 1].GetRoom();
-
-                std::cout << "11111111" << std::endl;
-                std::cout << city1[0] << std::endl;
-                std::cout << city2[0] << std::endl;
-                std::cout << "11111111" << std::endl;
 
                 if (city1[0] > city2[0])
                 {
@@ -192,29 +166,14 @@ int main()
 
         } while (swapped);
 
-        std::cout << "------------" << std::endl;
-        for (int i = 0; i < address.GetNumberAddr(); i++)
-        {
-            std::string result3 = addr_arr[i].GetCity();
-            std::cout << result3 << std::endl;
-        }
-        std::cout << "------------" << std::endl;
-
-        file_out2.close();
-
-
         std::ofstream file_out("out.txt");
         file_out << address.GetNumberAddr() << std::endl;
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < address.GetNumberAddr(); i++)
         {
             std::string result = address.get_output_address(addr_arr[i].GetCity(), addr_arr[i].GetStreet(), addr_arr[i].GetHouse(), addr_arr[i].GetRoom());
             file_out << result << std::endl;
         }
-        //file_out.close();
-
-
-
-
+        file_out.close();
 
         delete[] addr_arr;
     }
