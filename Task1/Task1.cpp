@@ -9,7 +9,7 @@
 class Addresses
 {
 private:
-    int number_addr = 0;
+    //int number_addr = 0;
     std::string city;
     std::string street;
     int house = 0;
@@ -46,10 +46,10 @@ public:
     {
         return room;
     }
-    int GetNumberAddr()
-    {
-        return number_addr;
-    }
+    /*  int GetNumberAddr()
+      {
+          return number_addr;
+      }*/
     void SetCity(std::string v_city)
     {
         city = v_city;
@@ -66,35 +66,46 @@ public:
     {
         room = v_room;
     }
-    void SetNumberAddr(int v_number_addr)
-    {
-        number_addr = v_number_addr;
-    }
+    /*  void SetNumberAddr(int v_number_addr)
+      {
+          number_addr = v_number_addr;
+      }*/
+
 
     std::string get_output_address(std::string city, std::string street, int house, int room)
     {
 
+        this->city = city;
+        this->street = street;
+        this->house = house;
+        this->room = room;
+        std::cout << "--------" << std::endl;
+        std::cout << city << " " << street << " " << house << " " << room << std::endl;
+        std::cout << "--------" << std::endl;
         std::string res;
         std::string strH;
         std::string strR;
         std::stringstream tempH;
         std::stringstream tempR;
-        std::string strC = city;
-        std::string strS = street;
+        //std::string strC = city;
+        //std::string strS = street;
+        
         tempH << house;
         tempH >> strH;
         tempR << room;
         tempR >> strR;
-        res = strC + ", " + strS + ", " + strH + ", " + strR;
+        //res = strC + ", " + strS + ", " + strH + ", " + strR;
+        res = city + ", " + street + ", " + strH + ", " + strR;
 
         return res;
     }
 
-
 };
+
 
 int main()
 {
+    setlocale(LC_ALL, "russian");
     std::string c;
     std::string s;
     int h;
@@ -106,7 +117,7 @@ int main()
     if (file_in.is_open())
     {
         file_in >> n;
-        address.SetNumberAddr(n);
+        //address.SetNumberAddr(n);
         Addresses* addr_arr = new Addresses[n];
         while (!(file_in.eof()))
         {
@@ -124,7 +135,7 @@ int main()
         }
 
         std::ofstream file_out("out.txt");
-        file_out << address.GetNumberAddr() << std::endl;
+        file_out << n << std::endl;
         for (int i = n - 1; i >= 0; i--)
         {
             std::string result = address.get_output_address(addr_arr[i].GetCity(), addr_arr[i].GetStreet(), addr_arr[i].GetHouse(), addr_arr[i].GetRoom());

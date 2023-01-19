@@ -9,7 +9,7 @@
 class Addresses
 {
 private:
-    int number_addr = 0;
+    //int number_addr = 0;
     std::string city;
     std::string street;
     int house = 0;
@@ -46,10 +46,10 @@ public:
     {
         return room;
     }
-    int GetNumberAddr()
+ /*   int GetNumberAddr()
     {
         return number_addr;
-    }
+    }*/
     void SetCity(std::string v_city)
     {
         city = v_city;
@@ -66,26 +66,35 @@ public:
     {
         room = v_room;
     }
-    void SetNumberAddr(int v_number_addr)
-    {
-        number_addr = v_number_addr;
-    }
+    //void SetNumberAddr(int v_number_addr)
+    //{
+    //    number_addr = v_number_addr;
+    //}
 
     std::string get_output_address(std::string city, std::string street, int house, int room)
     {
 
+        this->city = city;
+        this->street = street;
+        this->house = house;
+        this->room = room;
+        //std::cout << "--------" << std::endl;
+        //std::cout << city << " " << street << " " << house << " " << room << std::endl;
+        //std::cout << "--------" << std::endl;
         std::string res;
         std::string strH;
         std::string strR;
         std::stringstream tempH;
         std::stringstream tempR;
-        std::string strC = city;
-        std::string strS = street;
+        //std::string strC = city;
+        //std::string strS = street;
+
         tempH << house;
         tempH >> strH;
         tempR << room;
         tempR >> strR;
-        res = strC + ", " + strS + ", " + strH + ", " + strR;
+        //res = strC + ", " + strS + ", " + strH + ", " + strR;
+        res = city + ", " + street + ", " + strH + ", " + strR;
 
         return res;
     }
@@ -107,11 +116,11 @@ int main()
     if (file_in.is_open())
     {
         file_in >> n;
-        address.SetNumberAddr(n);
+        //address.SetNumberAddr(n);
         Addresses* addr_arr = new Addresses[n];
         while (!(file_in.eof()))
         {
-            for (int i = 0; i < address.GetNumberAddr(); i++)
+            for (int i = 0; i < n; i++)
             {
                 file_in >> c;
                 addr_arr[i].SetCity(c);
@@ -124,27 +133,28 @@ int main()
             }
         }
  
-        bool swapped{};
+ /*       bool swapped{};
         do
         {
             swapped = false;
-            for (int i = 0; i < address.GetNumberAddr() - 1; i++)
+            for (int i = 0; i < n - 1; i++)
             {
                 std::string city1 = addr_arr[i].GetCity();
                 std::string street1 = addr_arr[i].GetStreet();
                 int house1 = addr_arr[i].GetHouse();
                 int room1 = addr_arr[i].GetRoom();
-
+                
+                 
                 std::string city2 = addr_arr[i + 1].GetCity();
                 std::string street2 = addr_arr[i + 1].GetStreet();
                 int house2 = addr_arr[i + 1].GetHouse();
                 int room2 = addr_arr[i + 1].GetRoom();
 
-                if (city1[0] > city2[0])
+                if (city1 > city2)
                 {
                     std::string temp_city = addr_arr[i].GetCity();
                     std::string temp_street = addr_arr[i].GetStreet();
-                    int temp_house = addr_arr[i].GetHouse();
+                    int temp_house = addr_arr[i].GetHouse ();
                     int temp_room = addr_arr[i].GetRoom();
 
                     addr_arr[i].SetCity(city2);
@@ -159,16 +169,36 @@ int main()
 
                     swapped = true;
                 }
-
-
             }
 
 
         } while (swapped);
 
+*/
+        bool swapped{};
+        do
+        {
+            swapped = false;
+            for (int i = 0; i < n - 1; i++)
+            {
+                std::string city1 = addr_arr[i].GetCity();
+                std::string city2 = addr_arr[i + 1].GetCity();
+                if (city1 > city2)
+                {
+                    Addresses temp = addr_arr[i];
+                    addr_arr[i] = addr_arr[i + 1];
+                    addr_arr[i + 1] = temp;
+                    swapped = true;
+                } 
+              
+            }
+        } while (swapped);
+
+       
+
         std::ofstream file_out("out.txt");
-        file_out << address.GetNumberAddr() << std::endl;
-        for (int i = 0; i < address.GetNumberAddr(); i++)
+        file_out << n << std::endl;
+        for (int i = 0; i < n; i++)
         {
             std::string result = address.get_output_address(addr_arr[i].GetCity(), addr_arr[i].GetStreet(), addr_arr[i].GetHouse(), addr_arr[i].GetRoom());
             file_out << result << std::endl;
